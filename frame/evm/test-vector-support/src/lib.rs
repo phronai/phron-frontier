@@ -84,7 +84,6 @@ impl PrecompileHandle for MockHandle {
 		&mut self,
 		_: Option<u64>,
 		_: Option<u64>,
-		_: Option<u64>,
 	) -> Result<(), ExitError> {
 		Ok(())
 	}

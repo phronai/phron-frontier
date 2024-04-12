@@ -17,6 +17,25 @@ members = [
 	"frame/evm/precompile/bls12381",
 	"frame/evm/precompile/dispatch",
 	"frame/evm/precompile/curve25519",
+
+#################################################
+    "client/phron/evm-tracing",
+    "client/phron/rpc-core/types",
+    "client/phron/rpc-core/trace",
+    "client/phron/rpc-core/debug",
+    "client/phron/rpc-core/txpool",
+    "client/phron/rpc/debug",
+    "client/phron/rpc/trace",
+    "client/phron/rpc/txpool",
+
+    "primitives/phron/ext",
+    "primitives/phron/rpc/evm-tracing-events",
+    "primitives/phron/rpc/debug",
+    "primitives/phron/rpc/txpool",
+    "runtime/evm-tracer",
+#################################################
+
+
 	"client/api",
 	"client/consensus",
 	"client/rpc-core",
@@ -49,9 +68,9 @@ bn = { package = "substrate-bn", version = "0.6", default-features = false }
 clap = { version = "4.5", features = ["derive", "deprecated"] }
 derive_more = "0.99"
 environmental = { version = "1.1.4", default-features = false }
-ethereum = { version = "0.15.0", default-features = false }
+ethereum = { version = "0.14.0", default-features = false }
 ethereum-types = { version = "0.14.1", default-features = false }
-evm = { version = "0.41.1", default-features = false }
+#evm = { version = "0.41.1", default-features = false }
 futures = "0.3.30"
 hash-db = { version = "0.16.0", default-features = false }
 hex = { version = "0.4.3", default-features = false, features = ["alloc"] }
@@ -189,10 +208,43 @@ pallet-evm-precompile-sha3fips = { path = "frame/evm/precompile/sha3fips", defau
 pallet-evm-precompile-simple = { path = "frame/evm/precompile/simple", default-features = false }
 pallet-evm-test-vector-support = { path = "frame/evm/test-vector-support" }
 pallet-hotfix-sufficients = { path = "frame/hotfix-sufficients", default-features = false }
+
 # Frontier Utility
 precompile-utils = { path = "precompiles", default-features = false }
+
 # Frontier Template
 frontier-template-runtime = { path = "template/runtime", default-features = false }
+
+
+###### EVM-TRACING ###############################################################################
+
+sha3 = { version = "0.10", default-features = false }
+tracing = "0.1.34"
+
+evm = { git = "https://github.com/bifrost-platform/evm", default-features = false, branch = "bifrost-polkadot-v1.3.0" }
+evm-gasometer = { git = "https://github.com/bifrost-platform/evm", default-features = false, branch = "bifrost-polkadot-v1.3.0" }
+evm-runtime = { git = "https://github.com/bifrost-platform/evm", default-features = false, branch = "bifrost-polkadot-v1.3.0" }
+
+# Frontier PHRON Client
+fc-evm-tracing = { version = "0.1.0", path = "client/phron/evm-tracing" }
+fc-rpc-core-debug = { version = "0.1.0", path = "client/phron/rpc-core/debug" }
+fc-rpc-core-trace = { version = "0.6.0", path = "client/phron/rpc-core/trace" }
+fc-rpc-core-txpool = { version = "0.6.0", path = "client/phron/rpc-core/txpool" }
+fc-rpc-core-types = { version = "0.1.0", path = "client/phron/rpc-core/types" }
+fc-rpc-debug = { version = "0.1.0", path = "client/phron/rpc/debug" }
+fc-rpc-trace = { version = "0.1.0", path = "client/phron/rpc/trace" }
+fc-rpc-txpool = { version = "0.1.0", path = "client/phron/rpc/txpool" }
+
+# Frontier PHRON Primitive
+fp-ext = { version = "0.1.0", path = "primitives/phron/ext", default-features = false }
+fp-rpc-debug = { version = "0.1.0", path = "primitives/phron/rpc/debug", default-features = false }
+fp-rpc-evm-tracing-events = { version = "0.1.0", path = "primitives/phron/rpc/evm-tracing-events", default-features = false }
+fp-rpc-txpool = { version = "0.6.0", path = "primitives/phron/rpc/txpool", default-features = false }
+
+# Frontier Runtime
+evm-tracer = { version = "0.1.0", path = "runtime/evm-tracer", default-features = false }
+
+##################################################################################################
 
 [profile.release]
 # Substrate runtime requires unwinding.
