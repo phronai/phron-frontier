@@ -19,7 +19,7 @@
 use std::{marker::PhantomData, sync::Arc};
 
 use ethereum_types::{H160, H256, U256};
-use scale_codec::Decode;
+use parity_scale_codec::Decode;
 // Substrate
 use sc_client_api::backend::{Backend, StorageProvider};
 use sp_blockchain::HeaderBackend;

@@ -16,6 +16,21 @@ members = [
 	"frame/evm/precompile/bls12377",
 	"frame/evm/precompile/dispatch",
 	"frame/evm/precompile/curve25519",
+
+#################################################
+    "client/phron/evm-tracing",
+    "client/phron/rpc-core/types",
+    "client/phron/rpc-core/debug",
+    "client/phron/rpc-core/txpool",
+    "client/phron/rpc/debug",
+    "client/phron/rpc/txpool",
+
+    "primitives/phron/ext",
+    "primitives/phron/rpc/debug",
+    "primitives/phron/rpc/txpool",
+    "runtime/evm-tracer",
+#################################################
+
 	"client/api",
 	"client/consensus",
 	"client/rpc-core",
@@ -50,7 +65,6 @@ derive_more = "0.99"
 environmental = { version = "1.1.4", default-features = false }
 ethereum = { version = "0.14.0", default-features = false }
 ethereum-types = { version = "0.14.1", default-features = false }
-evm = { git = "https://github.com/rust-blockchain/evm", rev = "b7b82c7e1fc57b7449d6dfa6826600de37cc1e65", default-features = false }
 futures = "0.3.28"
 hash-db = { version = "0.16.0", default-features = false }
 hex = { version = "0.4.3", default-features = false, features = ["alloc"] }
@@ -65,7 +79,7 @@ num_enum = { version = "0.7.0", default-features = false }
 parity-db = "0.4.10"
 parking_lot = "0.12.1"
 rlp = { version = "0.5.2", default-features = false }
-scale-codec = { package = "parity-scale-codec", version = "3.6.4", default-features = false, features = ["derive"] }
+parity-scale-codec = { version = "3.6.4", default-features = false, features = ["derive"] }
 scale-info = { version = "2.9.0", default-features = false, features = ["derive"] }
 serde = { version = "1.0", default-features = false, features = ["derive", "alloc"] }
 serde_json = "1.0"
@@ -109,6 +123,7 @@ sp-core = { version = "21.0.0", git = "https://github.com/paritytech/polkadot-sd
 sp-core-hashing = { version = "9.0.0", git = "https://github.com/paritytech/polkadot-sdk", branch = "release-polkadot-v1.1.0", default-features = false }
 sp-core-hashing-proc-macro = { version = "9.0.0", git = "https://github.com/paritytech/polkadot-sdk", branch = "release-polkadot-v1.1.0", default-features = false }
 sp-database = { version = "4.0.0-dev", git = "https://github.com/paritytech/polkadot-sdk", branch = "release-polkadot-v1.1.0" }
+sp-externalities = { git = "https://github.com/paritytech/polkadot-sdk", branch = "release-polkadot-v1.1.0", default-features = false }
 sp-inherents = { version = "4.0.0-dev", git = "https://github.com/paritytech/polkadot-sdk", branch = "release-polkadot-v1.1.0", default-features = false }
 sp-io = { version = "23.0.0", git = "https://github.com/paritytech/polkadot-sdk", branch = "release-polkadot-v1.1.0", default-features = false }
 sp-keyring = { version = "24.0.0", git = "https://github.com/paritytech/polkadot-sdk", branch = "release-polkadot-v1.1.0" }
@@ -163,7 +178,7 @@ fp-ethereum = { version = "1.0.0-dev", path = "primitives/ethereum", default-fea
 fp-evm = { version = "3.0.0-dev", path = "primitives/evm", default-features = false }
 fp-rpc = { version = "3.0.0-dev", path = "primitives/rpc", default-features = false }
 fp-self-contained = { version = "1.0.0-dev", path = "primitives/self-contained", default-features = false }
-fp-storage = { version = "2.0.0", path = "primitives/storage", default-features = false }
+fp-storage = { path = "primitives/storage", default-features = false }
 # Frontier FRAME
 pallet-base-fee = { version = "1.0.0", path = "frame/base-fee", default-features = false }
 pallet-dynamic-fee = { version = "4.0.0-dev", path = "frame/dynamic-fee", default-features = false }
@@ -179,6 +194,41 @@ pallet-hotfix-sufficients = { version = "1.0.0", path = "frame/hotfix-sufficient
 frontier-template-runtime = { path = "template/runtime", default-features = false }
 # Frontier Utility
 precompile-utils = { path = "precompiles", default-features = false }
+
+
+
+###### EVM-TRACING ###############################################################################
+
+sha3 = { version = "0.10", default-features = false }
+tracing = "0.1.34"
+
+evm = { git = "https://github.com/shamasrehan/evm", default-features = false, branch = "phron-polkadot-v1.9.0" }
+evm-gasometer = { git = "https://github.com/shamasrehan/evm", default-features = false, branch = "phron-polkadot-v1.9.0" }
+evm-runtime = { git = "https://github.com/shamasrehan/evm", default-features = false, branch = "phron-polkadot-v1.9.0" }
+
+# Frontier PHRON Client
+fc-evm-tracing = { version = "0.1.0", path = "client/phron/evm-tracing" }
+
+fc-rpc-debug = { version = "0.1.0", path = "client/phron/rpc/debug" }
+fc-rpc-core-debug = { version = "0.1.0", path = "client/phron/rpc-core/debug" }
+
+# fc-rpc-trace = { version = "0.1.0", path = "client/phron/rpc/trace" }
+# fc-rpc-core-trace = { version = "0.6.0", path = "client/phron/rpc-core/trace" }
+
+fc-rpc-txpool = { version = "0.1.0", path = "client/phron/rpc/txpool" }
+fc-rpc-core-txpool = { version = "0.6.0", path = "client/phron/rpc-core/txpool" }
+
+fc-rpc-core-types = { version = "0.1.0", path = "client/phron/rpc-core/types" }
+
+# Frontier PHRON Primitive
+fp-ext = { version = "0.1.0", path = "primitives/phron/ext", default-features = false }
+fp-rpc-txpool = { version = "0.6.0", path = "primitives/phron/rpc/txpool", default-features = false }
+
+# Frontier Runtime
+evm-tracer = { version = "0.1.0", path = "runtime/evm-tracer", default-features = false }
+
+##################################################################################################
+
 
 # Arkworks
 ark-bls12-377 = { version = "0.4.0", default-features = false, features = ["curve"] }

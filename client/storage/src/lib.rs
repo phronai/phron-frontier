@@ -23,7 +23,7 @@ pub use self::overrides::*;
 
 use std::{collections::BTreeMap, sync::Arc};
 
-use scale_codec::Decode;
+use parity_scale_codec::Decode;
 // Substrate
 use sc_client_api::{backend::Backend, StorageProvider};
 use sp_api::ProvideRuntimeApi;

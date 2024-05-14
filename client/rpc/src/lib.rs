@@ -62,7 +62,7 @@ pub mod frontier_backend_client {
 
 	use ethereum_types::{H160, H256, U256};
 	use jsonrpsee::core::RpcResult;
-	use scale_codec::Encode;
+	use parity_scale_codec::Encode;
 	// Substrate
 	use sc_client_api::{
 		backend::{Backend, StorageProvider},

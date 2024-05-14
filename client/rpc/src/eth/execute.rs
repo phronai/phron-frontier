@@ -21,7 +21,7 @@ use std::{cell::RefCell, collections::BTreeMap, sync::Arc};
 use ethereum_types::{H160, H256, U256};
 use evm::{ExitError, ExitReason};
 use jsonrpsee::core::RpcResult;
-use scale_codec::{Decode, Encode};
+use parity_scale_codec::{Decode, Encode};
 // Substrate
 use sc_client_api::backend::{Backend, StorageProvider};
 use sc_transaction_pool::ChainApi;

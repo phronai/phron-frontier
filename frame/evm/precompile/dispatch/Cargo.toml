@@ -8,7 +8,7 @@ edition = { workspace = true }
 repository = { workspace = true }
 
 [dependencies]
-scale-codec = { package = "parity-scale-codec", workspace = true }
+parity-scale-codec = { workspace = true }
 # Substrate
 frame-support = { workspace = true }
 sp-runtime = { workspace = true }
@@ -31,7 +31,7 @@ sp-std = { workspace = true, features = ["default"] }
 [features]
 default = ["std"]
 std = [
-	"scale-codec/std",
+	"parity-scale-codec/std",
 	# Substrate
 	"frame-support/std",
 	"sp-runtime/std",

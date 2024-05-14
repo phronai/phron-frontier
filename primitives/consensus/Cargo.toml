@@ -9,7 +9,7 @@ repository = { workspace = true }
 
 [dependencies]
 ethereum = { workspace = true, features = ["with-codec"] }
-scale-codec = { package = "parity-scale-codec", workspace = true }
+parity-scale-codec = { workspace = true }
 # Substrate
 sp-core = { workspace = true }
 sp-runtime = { workspace = true }
@@ -19,7 +19,7 @@ sp-std = { workspace = true }
 default = ["std"]
 std = [
 	"ethereum/std",
-	"scale-codec/std",
+	"parity-scale-codec/std",
 	# Substrate
 	"sp-core/std",
 	"sp-runtime/std",

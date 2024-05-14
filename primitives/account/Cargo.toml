@@ -12,7 +12,7 @@ hex = { workspace = true }
 impl-serde = { workspace = true, optional = true }
 libsecp256k1 = { workspace = true }
 log = { workspace = true }
-scale-codec = { package = "parity-scale-codec", workspace = true }
+parity-scale-codec = { workspace = true }
 scale-info = { workspace = true }
 serde = { workspace = true, optional = true }
 
@@ -32,7 +32,7 @@ std = [
 	"impl-serde/std",
 	"libsecp256k1/std",
 	"log/std",
-	"scale-codec/std",
+	"parity-scale-codec/std",
 	"scale-info/std",
 	"serde/std",
 	# Substrate

@@ -19,7 +19,7 @@
 #![allow(clippy::large_enum_variant)]
 #![deny(unused_crate_dependencies)]
 
-use scale_codec::{Decode, Encode};
+use parity_scale_codec::{Decode, Encode};
 use sp_core::H256;
 use sp_runtime::{
 	generic::{Digest, OpaqueDigestItemId},

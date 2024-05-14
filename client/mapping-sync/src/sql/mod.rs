@@ -478,7 +478,7 @@ mod test {
 	};
 
 	use futures::executor;
-	use scale_codec::Encode;
+	use parity_scale_codec::Encode;
 	use sqlx::Row;
 	use tempfile::tempdir;
 	// Substrate
