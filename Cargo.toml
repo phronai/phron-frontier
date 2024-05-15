@@ -26,8 +26,6 @@ members = [
     "client/phron/rpc/txpool",
 
     "primitives/phron/ext",
-    "primitives/phron/rpc/debug",
-    "primitives/phron/rpc/txpool",
     "runtime/evm-tracer",
 #################################################
 
@@ -222,7 +220,6 @@ fc-rpc-core-types = { version = "0.1.0", path = "client/phron/rpc-core/types" }
 
 # Frontier PHRON Primitive
 fp-ext = { version = "0.1.0", path = "primitives/phron/ext", default-features = false }
-fp-rpc-txpool = { version = "0.6.0", path = "primitives/phron/rpc/txpool", default-features = false }
 
 # Frontier Runtime
 evm-tracer = { version = "0.1.0", path = "runtime/evm-tracer", default-features = false }

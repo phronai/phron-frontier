@@ -2,7 +2,7 @@
 name = "evm-tracer"
 authors = ["phron-platform"]
 edition = "2021"
-homepage = "https://thephron.io"
+homepage = "https://phron.io"
 license = "Apache-2.0"
 repository = "https://github.com/phronesis"
 version = "0.1.0"
