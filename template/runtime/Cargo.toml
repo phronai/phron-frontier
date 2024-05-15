@@ -45,7 +45,7 @@ pallet-transaction-payment-rpc-runtime-api = { workspace = true }
 # Frontier
 fp-account = { workspace = true, features = ["serde"] }
 fp-evm = { workspace = true, features = ["serde"] }
-fp-rpc = { workspace = true }
+fp-rpc-phron = { workspace = true }
 fp-self-contained = { workspace = true, features = ["serde"] }
 # Frontier FRAME
 pallet-base-fee = { workspace = true }
@@ -98,7 +98,7 @@ std = [
 	# Frontier
 	"fp-account/std",
 	"fp-evm/std",
-	"fp-rpc/std",
+	"fp-rpc-phron/std",
 	"fp-self-contained/std",
 	# Frontier FRAME
 	"pallet-base-fee/std",

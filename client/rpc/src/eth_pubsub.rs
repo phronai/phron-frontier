@@ -45,7 +45,7 @@ use fc_rpc_core::{
 	EthPubSubApiServer,
 };
 use fc_storage::OverrideHandle;
-use fp_rpc::EthereumRuntimeRPCApi;
+use fp_rpc_phron::EthereumRuntimeRPCApi;
 
 #[derive(Debug)]
 pub struct EthereumSubIdProvider;

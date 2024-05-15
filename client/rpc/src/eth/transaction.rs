@@ -31,7 +31,7 @@ use sp_core::hashing::keccak_256;
 use sp_runtime::traits::Block as BlockT;
 // Frontier
 use fc_rpc_core::types::*;
-use fp_rpc::EthereumRuntimeRPCApi;
+use fp_rpc_phron::EthereumRuntimeRPCApi;
 
 use crate::{
 	eth::{transaction_build, BlockInfo, Eth, EthConfig},

@@ -1,3 +1,3 @@
-# Changelog for `fp-rpc`
+# Changelog for `fp-rpc-phron`
 
 ## Unreleased

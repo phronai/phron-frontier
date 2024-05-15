@@ -35,7 +35,7 @@ use sp_consensus::SyncOracle;
 use sp_runtime::traits::{Block as BlockT, Header as HeaderT};
 // Frontier
 use fc_storage::OverrideHandle;
-use fp_rpc::EthereumRuntimeRPCApi;
+use fp_rpc_phron::EthereumRuntimeRPCApi;
 
 use crate::SyncStrategy;
 

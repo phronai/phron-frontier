@@ -27,7 +27,7 @@ use sp_consensus::SyncOracle;
 use sp_core::H256;
 use sp_runtime::traits::{BlakeTwo256, Block as BlockT, UniqueSaturatedInto};
 // Frontier
-use fp_rpc::EthereumRuntimeRPCApi;
+use fp_rpc_phron::EthereumRuntimeRPCApi;
 
 use crate::{EthereumBlockNotification, EthereumBlockNotificationSinks, SyncStrategy};
 

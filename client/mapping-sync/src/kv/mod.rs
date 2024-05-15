@@ -33,7 +33,7 @@ use sp_runtime::traits::{Block as BlockT, Header as HeaderT, Zero};
 // Frontier
 use fc_storage::OverrideHandle;
 use fp_consensus::{FindLogError, Hashes, Log, PostLog, PreLog};
-use fp_rpc::EthereumRuntimeRPCApi;
+use fp_rpc_phron::EthereumRuntimeRPCApi;
 
 use crate::{EthereumBlockNotification, EthereumBlockNotificationSinks, SyncStrategy};
 

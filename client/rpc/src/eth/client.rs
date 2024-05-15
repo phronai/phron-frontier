@@ -27,7 +27,7 @@ use sp_consensus::SyncOracle;
 use sp_runtime::traits::{Block as BlockT, UniqueSaturatedInto};
 // Frontier
 use fc_rpc_core::types::*;
-use fp_rpc::EthereumRuntimeRPCApi;
+use fp_rpc_phron::EthereumRuntimeRPCApi;
 
 use crate::{
 	eth::{Eth, EthConfig},

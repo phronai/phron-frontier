@@ -21,4 +21,4 @@ sp-consensus = { workspace = true }
 sp-runtime = { workspace = true }
 # Frontier
 fp-consensus = { workspace = true, features = ["default"] }
-fp-rpc = { workspace = true, features = ["default"] }
+fp-rpc-phron = { workspace = true, features = ["default"] }

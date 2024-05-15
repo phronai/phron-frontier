@@ -34,7 +34,7 @@ use fc_rpc_core::{
 	types::{Get, Summary, TransactionMap, TxPoolResult, TxPoolTransaction},
 	TxPoolApiServer,
 };
-use fp_rpc::{EthereumRuntimeRPCApi, TxPoolResponse};
+use fp_rpc_phron::{EthereumRuntimeRPCApi, TxPoolResponse};
 
 use crate::{internal_err, public_key};
 

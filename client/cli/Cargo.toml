@@ -22,7 +22,7 @@ sp-blockchain = { workspace = true }
 sp-runtime = { workspace = true }
 # Frontier
 fc-db = { workspace = true }
-fp-rpc = { workspace = true, features = ["default"] }
+fp-rpc-phron = { workspace = true, features = ["default"] }
 fp-storage = { workspace = true, features = ["default"] }
 
 [dev-dependencies]

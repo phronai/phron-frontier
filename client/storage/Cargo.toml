@@ -23,5 +23,5 @@ sp-io = { workspace = true }
 sp-runtime = { workspace = true }
 sp-storage = { workspace = true }
 # Frontier
-fp-rpc = { workspace = true, features = ["default"] }
+fp-rpc-phron = { workspace = true, features = ["default"] }
 fp-storage = { workspace = true, features = ["default"] }

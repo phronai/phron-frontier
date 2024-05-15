@@ -13,7 +13,7 @@ use sp_blockchain::{Error as BlockChainError, HeaderBackend, HeaderMetadata};
 use sp_runtime::traits::Block as BlockT;
 use std::{collections::HashMap, marker::PhantomData, sync::Arc};
 
-use fp_rpc::{Transaction as TransactionV2, TxPoolResponse, TxPoolRuntimeApi};
+use fp_rpc_phron::{Transaction as TransactionV2, TxPoolResponse, TxPoolRuntimeApi};
 
 pub struct TxPool<B: BlockT, C, A: ChainApi> {
 	client: Arc<C>,

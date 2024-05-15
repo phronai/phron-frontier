@@ -11,7 +11,7 @@ use ethereum_types::H256;
 use fc_evm_tracing::{tracer::ResponseLayout, tracer::types::{SingleTransactionTrace, TraceType}};
 use fc_rpc::{frontier_backend_client, internal_err, OverrideHandle};
 use fc_rpc_core_types::{RequestBlockId, RequestBlockTag};
-use fp_rpc::{EthereumRuntimeRPCApi, DebugRuntimeApi, TracerInput};
+use fp_rpc_phron::{EthereumRuntimeRPCApi, DebugRuntimeApi, TracerInput};
 use sc_client_api::backend::{Backend, StateBackend, StorageProvider};
 use sc_utils::mpsc::TracingUnboundedSender;
 
@@ -369,7 +369,7 @@ where
 						reference_id, e
 					))
 				})?;
-			Ok(fp_rpc::Response::Block)
+			Ok(fp_rpc_phron::Response::Block)
 		};
 
 		return match trace_type {
@@ -527,7 +527,7 @@ where
 						};
 					}
 
-					Ok(fp_rpc::Response::Single)
+					Ok(fp_rpc_phron::Response::Single)
 				};
 
 				return match trace_type {

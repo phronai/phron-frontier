@@ -25,7 +25,7 @@ use sp_api::{ApiExt, ProvideRuntimeApi};
 use sp_io::hashing::{blake2_128, twox_128};
 use sp_runtime::{traits::Block as BlockT, Permill};
 // Frontier
-use fp_rpc::{EthereumRuntimeRPCApi, TransactionStatus};
+use fp_rpc_phron::{EthereumRuntimeRPCApi, TransactionStatus};
 use fp_storage::EthereumStorageSchema;
 
 mod schema_v1_override;

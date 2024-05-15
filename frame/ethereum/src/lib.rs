@@ -63,7 +63,7 @@ use fp_ethereum::ValidatedTransaction as ValidatedTransactionT;
 use fp_evm::{
 	CallOrCreateInfo, CheckEvmTransaction, CheckEvmTransactionConfig, TransactionValidationError,
 };
-pub use fp_rpc::TransactionStatus;
+pub use fp_rpc_phron::TransactionStatus;
 use fp_storage::{EthereumStorageSchema, PALLET_ETHEREUM_SCHEMA};
 use pallet_evm::{BlockHashMapping, FeeCalculator, GasWeightMapping, Runner};
 

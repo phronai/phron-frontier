@@ -48,7 +48,7 @@ use sp_runtime::traits::{Block as BlockT, UniqueSaturatedInto};
 // Frontier
 use fc_rpc_core::{types::*, EthApiServer};
 use fc_storage::OverrideHandle;
-use fp_rpc::{
+use fp_rpc_phron::{
 	ConvertTransaction, ConvertTransactionRuntimeApi, EthereumRuntimeRPCApi,
 	RuntimeStorageOverride, TransactionStatus,
 };

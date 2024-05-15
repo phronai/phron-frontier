@@ -35,7 +35,7 @@ sp-storage = { workspace = true, optional = true }
 fc-api = { workspace = true }
 fc-storage = { workspace = true, optional = true }
 fp-consensus = { workspace = true, features = ["default"], optional = true }
-fp-rpc = { workspace = true, features = ["default"], optional = true }
+fp-rpc-phron = { workspace = true, features = ["default"], optional = true }
 fp-storage = { workspace = true, features = ["default"] }
 
 [dev-dependencies]
@@ -64,5 +64,5 @@ sql = [
 	"sp-storage",
 	"fc-storage",
 	"fp-consensus",
-	"fp-rpc",
+	"fp-rpc-phron",
 ]

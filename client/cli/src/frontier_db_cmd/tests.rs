@@ -540,7 +540,7 @@ fn commitment_create() {
 	let mut client = Arc::new(c);
 
 	// Get some transaction status.
-	let t1 = fp_rpc::TransactionStatus::default();
+	let t1 = fp_rpc_phron::TransactionStatus::default();
 	let t1_hash = t1.transaction_hash;
 	let statuses = vec![t1];
 
@@ -610,8 +610,8 @@ fn commitment_update() {
 	let mut client = Arc::new(c);
 
 	// Get some transaction status.
-	let t1 = fp_rpc::TransactionStatus::default();
-	let t2 = fp_rpc::TransactionStatus {
+	let t1 = fp_rpc_phron::TransactionStatus::default();
+	let t2 = fp_rpc_phron::TransactionStatus {
 		transaction_hash: H256::from_str(
 			"0x2200000000000000000000000000000000000000000000000000000000000000",
 		)
@@ -742,7 +742,7 @@ fn mapping_read_works() {
 	let mut client = Arc::new(c);
 
 	// Get some transaction status.
-	let t1 = fp_rpc::TransactionStatus::default();
+	let t1 = fp_rpc_phron::TransactionStatus::default();
 	let t1_hash = t1.transaction_hash;
 	let statuses = vec![t1];
 

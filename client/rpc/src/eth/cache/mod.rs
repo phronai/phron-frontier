@@ -40,7 +40,7 @@ use sp_runtime::traits::{Block as BlockT, Header as HeaderT, UniqueSaturatedInto
 // Frontier
 use fc_rpc_core::types::*;
 use fc_storage::{OverrideHandle, StorageOverride};
-use fp_rpc::{EthereumRuntimeRPCApi, TransactionStatus};
+use fp_rpc_phron::{EthereumRuntimeRPCApi, TransactionStatus};
 use fp_storage::EthereumStorageSchema;
 
 use self::lru_cache::LRUCacheByteLimited;

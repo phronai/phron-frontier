@@ -26,7 +26,7 @@ use sp_blockchain::HeaderBackend;
 use sp_runtime::{traits::Block as BlockT, Permill};
 use sp_storage::StorageKey;
 // Frontier
-use fp_rpc::TransactionStatus;
+use fp_rpc_phron::TransactionStatus;
 use fp_storage::*;
 
 use super::{blake2_128_extend, storage_prefix_build, StorageOverride};

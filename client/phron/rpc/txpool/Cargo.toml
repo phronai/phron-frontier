@@ -28,4 +28,4 @@ sp-std = { workspace = true }
 # Frontier
 ethereum-types = { workspace = true, features = ["std"] }
 fc-rpc = { workspace = true, features = ["rpc-binary-search-estimate"] }
-fp-rpc = { workspace = true, features = ["default"] }
+fp-rpc-phron = { workspace = true, features = ["default"] }

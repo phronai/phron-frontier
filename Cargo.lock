@@ -2206,7 +2206,7 @@ dependencies = [
  "ethereum-types",
  "fc-api",
  "fc-db",
- "fp-rpc",
+ "fp-rpc-phron",
  "fp-storage",
  "frontier-template-runtime",
  "futures 0.3.30",
@@ -2231,7 +2231,7 @@ version = "2.0.0-dev"
 dependencies = [
  "async-trait",
  "fp-consensus",
- "fp-rpc",
+ "fp-rpc-phron",
  "sc-consensus",
  "sp-api",
  "sp-block-builder",
@@ -2249,7 +2249,7 @@ dependencies = [
  "fc-api",
  "fc-storage",
  "fp-consensus",
- "fp-rpc",
+ "fp-rpc-phron",
  "fp-storage",
  "futures 0.3.30",
  "kvdb-rocksdb",
@@ -2284,7 +2284,7 @@ dependencies = [
  "evm",
  "evm-gasometer",
  "evm-runtime",
- "fp-rpc",
+ "fp-rpc-phron",
  "hex",
  "parity-scale-codec",
  "serde",
@@ -2302,7 +2302,7 @@ dependencies = [
  "fc-db",
  "fc-storage",
  "fp-consensus",
- "fp-rpc",
+ "fp-rpc-phron",
  "fp-storage",
  "frontier-template-runtime",
  "futures 0.3.30",
@@ -2339,7 +2339,7 @@ dependencies = [
  "fc-rpc-core",
  "fc-storage",
  "fp-evm",
- "fp-rpc",
+ "fp-rpc-phron",
  "fp-storage",
  "futures 0.3.30",
  "hex",
@@ -2445,7 +2445,7 @@ dependencies = [
  "fc-rpc-core-debug",
  "fc-rpc-core-types",
  "fc-storage",
- "fp-rpc",
+ "fp-rpc-phron",
  "futures 0.3.30",
  "hex-literal",
  "jsonrpsee",
@@ -2467,7 +2467,7 @@ dependencies = [
  "ethereum-types",
  "fc-rpc",
  "fc-rpc-core-txpool",
- "fp-rpc",
+ "fp-rpc-phron",
  "frame-system",
  "jsonrpsee",
  "rlp",
@@ -2488,7 +2488,7 @@ version = "1.0.0-dev"
 dependencies = [
  "ethereum",
  "ethereum-types",
- "fp-rpc",
+ "fp-rpc-phron",
  "fp-storage",
  "parity-scale-codec",
  "sc-client-api",
@@ -2743,7 +2743,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "fp-rpc"
+name = "fp-rpc-phron"
 version = "3.0.0-dev"
 dependencies = [
  "ethereum",
@@ -3037,7 +3037,7 @@ dependencies = [
  "fp-account",
  "fp-dynamic-fee",
  "fp-evm",
- "fp-rpc",
+ "fp-rpc-phron",
  "frame-benchmarking",
  "frame-benchmarking-cli",
  "frame-system",
@@ -3094,7 +3094,7 @@ version = "0.0.0"
 dependencies = [
  "fp-account",
  "fp-evm",
- "fp-rpc",
+ "fp-rpc-phron",
  "fp-self-contained",
  "frame-benchmarking",
  "frame-executive",
@@ -5532,7 +5532,7 @@ dependencies = [
  "fp-consensus",
  "fp-ethereum",
  "fp-evm",
- "fp-rpc",
+ "fp-rpc-phron",
  "fp-self-contained",
  "fp-storage",
  "frame-support",

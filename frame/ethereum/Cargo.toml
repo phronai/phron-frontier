@@ -26,7 +26,7 @@ sp-std = { workspace = true }
 fp-consensus = { workspace = true }
 fp-ethereum = { workspace = true }
 fp-evm = { workspace = true }
-fp-rpc = { workspace = true }
+fp-rpc-phron = { workspace = true }
 fp-storage = { workspace = true }
 pallet-evm = { workspace = true }
 
@@ -60,7 +60,7 @@ std = [
 	"fp-consensus/std",
 	"fp-ethereum/std",
 	"fp-evm/std",
-	"fp-rpc/std",
+	"fp-rpc-phron/std",
 	"fp-self-contained/std",
 	"fp-storage/std",
 	"pallet-evm/std",

@@ -83,7 +83,7 @@ pub mod frontier_backend_client {
 	/// have `nonce: Index` = `u32` for  and `free: Balance` = `u128`.
 	/// Uses IdentityAddressMapping for the address.
 	pub struct SystemAccountId20StorageOverride<B, C, BE>(pub std::marker::PhantomData<(B, C, BE)>);
-	impl<B, C, BE> fp_rpc::RuntimeStorageOverride<B, C> for SystemAccountId20StorageOverride<B, C, BE>
+	impl<B, C, BE> fp_rpc_phron::RuntimeStorageOverride<B, C> for SystemAccountId20StorageOverride<B, C, BE>
 	where
 		B: BlockT,
 		C: StorageProvider<B, BE> + Send + Sync,
@@ -136,7 +136,7 @@ pub mod frontier_backend_client {
 	/// have `nonce: Index` = `u32` for  and `free: Balance` = `u128`.
 	/// USes HashedAddressMapping for the address.
 	pub struct SystemAccountId32StorageOverride<B, C, BE>(pub std::marker::PhantomData<(B, C, BE)>);
-	impl<B, C, BE> fp_rpc::RuntimeStorageOverride<B, C> for SystemAccountId32StorageOverride<B, C, BE>
+	impl<B, C, BE> fp_rpc_phron::RuntimeStorageOverride<B, C> for SystemAccountId32StorageOverride<B, C, BE>
 	where
 		B: BlockT,
 		C: StorageProvider<B, BE> + Send + Sync,

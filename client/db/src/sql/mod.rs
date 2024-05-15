@@ -40,7 +40,7 @@ use sp_runtime::{
 use fc_api::{FilteredLog, TransactionMetadata};
 use fc_storage::OverrideHandle;
 use fp_consensus::{FindLogError, Hashes, Log as ConsensusLog, PostLog, PreLog};
-use fp_rpc::EthereumRuntimeRPCApi;
+use fp_rpc_phron::EthereumRuntimeRPCApi;
 use fp_storage::{EthereumStorageSchema, PALLET_ETHEREUM_SCHEMA};
 
 /// Maximum number to topics allowed to be filtered upon

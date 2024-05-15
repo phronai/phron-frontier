@@ -28,7 +28,7 @@ use sp_consensus::Error as ConsensusError;
 use sp_runtime::traits::{Block as BlockT, Header as HeaderT};
 // Frontier
 use fp_consensus::{ensure_log, FindLogError};
-use fp_rpc::EthereumRuntimeRPCApi;
+use fp_rpc_phron::EthereumRuntimeRPCApi;
 
 #[derive(Debug, thiserror::Error)]
 pub enum Error {

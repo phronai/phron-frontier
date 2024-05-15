@@ -105,7 +105,7 @@ impl FrontierDbCmd {
 	) -> sc_cli::Result<()>
 	where
 		C: ProvideRuntimeApi<B>,
-		C::Api: fp_rpc::EthereumRuntimeRPCApi<B>,
+		C::Api: fp_rpc_phron::EthereumRuntimeRPCApi<B>,
 		C: HeaderBackend<B>,
 	{
 		match self.column {

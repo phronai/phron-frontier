@@ -110,15 +110,15 @@ pub fn new_frontier_partial(
 /// A set of APIs that ethereum-compatible runtimes must implement.
 pub trait EthCompatRuntimeApiCollection:
 	sp_api::ApiExt<Block>
-	+ fp_rpc::ConvertTransactionRuntimeApi<Block>
-	+ fp_rpc::EthereumRuntimeRPCApi<Block>
+	+ fp_rpc_phron::ConvertTransactionRuntimeApi<Block>
+	+ fp_rpc_phron::EthereumRuntimeRPCApi<Block>
 {
 }
 
 impl<Api> EthCompatRuntimeApiCollection for Api where
 	Api: sp_api::ApiExt<Block>
-		+ fp_rpc::ConvertTransactionRuntimeApi<Block>
-		+ fp_rpc::EthereumRuntimeRPCApi<Block>
+		+ fp_rpc_phron::ConvertTransactionRuntimeApi<Block>
+		+ fp_rpc_phron::EthereumRuntimeRPCApi<Block>
 {
 }
 
