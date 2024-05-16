@@ -17,7 +17,7 @@ serde_json = { workspace = true }
 
 sp-runtime-interface = { workspace = true }
 
-fp-rpc-phron = { workspace = true, features = ["default"] }
+fp-rpc-phron = { workspace = true }
 
 evm = { workspace = true, features = ["with-codec", "tracing"] }
 evm-gasometer = { workspace = true, features = ["tracing"] }
@@ -36,6 +36,7 @@ std = [
 	"environmental/std",
 	"evm-gasometer/std",
 	"evm-runtime/std",
+	"fp-rpc-phron/std",
 	"evm/std",
 ]
 evm-tracing = ["evm-gasometer/tracing", "evm-runtime/tracing", "evm/tracing"]
