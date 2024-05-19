@@ -24,7 +24,6 @@ evm-gasometer = { workspace = true }
 evm-runtime = { workspace = true }
 fp-evm = { workspace = true }
 pallet-evm = { workspace = true, features = ["forbid-evm-reentrancy"] }
-fc-evm-tracing = { workspace = true }
 
 [features]
 default = ["std"]
@@ -35,7 +34,6 @@ std = [
 	"evm-runtime/std",
 	"evm/std",
 	"evm/with-serde",
-	"fc-evm-tracing/std",
 	"fp-evm/std",
 	"fp-ext/std",
 	"pallet-evm/std",

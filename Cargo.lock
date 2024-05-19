@@ -2135,7 +2135,6 @@ dependencies = [
  "evm",
  "evm-gasometer",
  "evm-runtime",
- "fc-evm-tracing",
  "fp-evm",
  "fp-ext",
  "pallet-evm",
