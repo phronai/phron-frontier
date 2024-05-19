@@ -34,6 +34,5 @@ std = [
 	"evm/std",
 	"evm-runtime/std",
 	"evm-gasometer/std",
-	"fc-evm-tracing/std",
 ]
 evm-tracing = ["evm-runtime/tracing"]
