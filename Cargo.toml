@@ -205,7 +205,7 @@ evm-gasometer = { git = "https://github.com/shamasrehan/evm", default-features =
 evm-runtime = { git = "https://github.com/shamasrehan/evm", default-features = false, branch = "phron-polkadot-v1.9.0" }
 
 # Frontier PHRON Client
-fc-evm-tracing = { version = "0.1.0", path = "client/phron/evm-tracing" }
+fc-evm-tracing = { version = "0.1.0", path = "client/phron/evm-tracing", default-features = false }
 
 fc-rpc-debug = { version = "0.1.0", path = "client/phron/rpc/debug" }
 fc-rpc-core-debug = { version = "0.1.0", path = "client/phron/rpc-core/debug" }

@@ -35,6 +35,7 @@ std = [
 	"evm-runtime/std",
 	"evm/std",
 	"evm/with-serde",
+	"fc-evm-tracing/std",
 	"fp-evm/std",
 	"fp-ext/std",
 	"pallet-evm/std",
