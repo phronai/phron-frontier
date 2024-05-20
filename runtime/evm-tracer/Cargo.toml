@@ -33,7 +33,6 @@ std = [
 	"evm-gasometer/std",
 	"evm-runtime/std",
 	"evm/std",
-	"evm/with-serde",
 	"fp-evm/std",
 	"fp-ext/std",
 	"pallet-evm/std",
