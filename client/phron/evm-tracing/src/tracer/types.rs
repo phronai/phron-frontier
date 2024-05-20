@@ -1,4 +1,3 @@
-
 use super::serializers::*;
 use serde::Serialize;
 
@@ -21,7 +20,7 @@ pub enum TraceType {
 		disable_memory: bool,
 		disable_stack: bool,
 	},
-	/// List of calls and subcalls formatted with an input tracer (i.e. callTracer or Blockscout).
+	/// List of calls and subcalls formatted with an input tracer (i.e. callTracer or Explorer).
 	CallList,
 	/// A single block trace. Use in `debug_traceTransactionByNumber` / `traceTransactionByHash`.
 	Block,
@@ -39,7 +38,7 @@ pub enum SingleTransactionTrace {
 		return_value: Vec<u8>,
 		struct_logs: Vec<RawStepLog>,
 	},
-	/// Matches the formatter used by Blockscout.
+	/// Matches the formatter used by Explorer.
 	/// Is also used to built output of OpenEthereum's `trace_filter`.
 	CallList(Vec<Call>),
 	/// Used by Geth's callTracer.

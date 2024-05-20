@@ -1,8 +1,11 @@
+use std::{collections::HashMap, sync::Arc};
+
 use ethereum_types::{H160, H256, U256};
 use fc_rpc::{internal_err, public_key};
 pub use fc_rpc_core_txpool::{
 	GetT, Summary, Transaction, TransactionMap, TxPoolResult, TxPoolServer,
 };
+use fp_rpc_phron::{Transaction as TransactionV2, TxPoolResponse, TxPoolRuntimeApi};
 use jsonrpsee::core::RpcResult;
 use sc_transaction_pool::{ChainApi, Pool};
 use sc_transaction_pool_api::InPoolTransaction;
@@ -11,9 +14,7 @@ use sha3::{Digest, Keccak256};
 use sp_api::{ApiExt, ProvideRuntimeApi};
 use sp_blockchain::{Error as BlockChainError, HeaderBackend, HeaderMetadata};
 use sp_runtime::traits::Block as BlockT;
-use std::{collections::HashMap, marker::PhantomData, sync::Arc};
-
-use fp_rpc_phron::{Transaction as TransactionV2, TxPoolResponse, TxPoolRuntimeApi};
+use std::marker::PhantomData;
 
 pub struct TxPool<B: BlockT, C, A: ChainApi> {
 	client: Arc<C>,

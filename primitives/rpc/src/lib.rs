@@ -33,7 +33,6 @@ use sp_runtime::{
 use sp_state_machine::OverlayedChanges;
 use sp_std::vec::Vec;
 
-
 #[derive(Clone, Eq, PartialEq, Default, RuntimeDebug, Encode, Decode, TypeInfo)]
 pub struct TransactionStatus {
 	pub transaction_hash: H256,
@@ -283,7 +282,7 @@ sp_api::decl_runtime_apis! {
 #[derive(Clone, Copy, Eq, PartialEq, Debug, Encode, Decode)]
 pub enum TracerInput {
 	None,
-	Blockscout,
+	Explorer,
 	CallTracer,
 }
 

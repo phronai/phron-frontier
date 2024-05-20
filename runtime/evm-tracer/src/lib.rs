@@ -10,12 +10,11 @@
 
 pub mod tracer {
 	use parity_scale_codec::Encode;
-	
+
 	use evm::events::StepEventFilter;
-	pub use evm::events::EvmEvent;
+	pub use evm::{events::EvmEvent, runtime::RuntimeEvent};
 	pub use evm_gasometer::events::GasometerEvent;
-	pub use evm::runtime::RuntimeEvent;
-	
+
 	use evm::tracing::{using as evm_using, EventListener as EvmListener};
 	use evm_gasometer::tracing::{using as gasometer_using, EventListener as GasometerListener};
 	use evm_runtime::tracing::{using as runtime_using, EventListener as RuntimeListener};
@@ -43,7 +42,6 @@ pub mod tracer {
 	pub struct EvmTracer {
 		step_event_filter: StepEventFilter,
 	}
-
 	impl EvmTracer {
 		pub fn new() -> Self {
 			Self {
@@ -51,24 +49,24 @@ pub mod tracer {
 			}
 		}
 
-		/// Setup event listeners and execute provided closure.
+		/// Setup event listeners and execute the provided closure.
 		///
 		/// Consume the tracer and return it alongside the return value of
 		/// the closure.
-		pub fn trace<R, F: FnOnce() -> R>(self, f: F) {
-			let wrapped = Rc::new(RefCell::new(self));
+		pub fn trace<R, F: FnOnce() -> R>(self, closure: F) {
+			let tracer_ref = Rc::new(RefCell::new(self));
 
-			let mut gasometer = ListenerProxy(Rc::clone(&wrapped));
-			let mut runtime = ListenerProxy(Rc::clone(&wrapped));
-			let mut evm = ListenerProxy(Rc::clone(&wrapped));
+			let mut gas_listener = ListenerProxy(Rc::clone(&tracer_ref));
+			let mut runtime_listener = ListenerProxy(Rc::clone(&tracer_ref));
+			let mut evm_listener = ListenerProxy(Rc::clone(&tracer_ref));
 
-			// Each line wraps the previous `f` into a `using` call.
+			// Each line wraps the previous `closure` into a `using` call.
 			// Listening to new events results in adding one new line.
-			// Order is irrelevant when registering listeners.
-			let f = || runtime_using(&mut runtime, f);
-			let f = || gasometer_using(&mut gasometer, f);
-			let f = || evm_using(&mut evm, f);
-			f();
+			// The order is irrelevant when registering listeners.
+			let closure = || runtime_using(&mut runtime_listener, closure);
+			let closure = || gasometer_using(&mut gas_listener, closure);
+			let closure = || evm_using(&mut evm_listener, closure);
+			closure();
 		}
 
 		pub fn emit_new() {

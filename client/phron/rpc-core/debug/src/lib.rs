@@ -10,7 +10,7 @@ pub struct TraceParams {
 	pub disable_storage: Option<bool>,
 	pub disable_memory: Option<bool>,
 	pub disable_stack: Option<bool>,
-	/// Javascript tracer (we just check if it's Blockscout tracer string)
+	/// Javascript tracer (we just check if it's Explorer tracer string)
 	pub tracer: Option<String>,
 	pub timeout: Option<String>,
 }

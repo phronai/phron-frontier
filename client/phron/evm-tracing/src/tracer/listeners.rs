@@ -1,15 +1,17 @@
+use std::{collections::BTreeMap, vec::Vec};
 
-use super::types::RawStepLog;
-use super::calls::{ExplorerCall as Call, ExplorerCallInner as CallInner};
-use super::{convert_memory, CallResult, CallType, ContextType, CreateResult};
-use evm::events::{
-	StepEventFilter, Listener as ListenerT, Event, EvmEvent,
+use super::{
+	calls::{ExplorerCall as Call, ExplorerCallInner as CallInner},
+	convert_memory,
+	types::RawStepLog,
+	CallResult, CallType, ContextType, CreateResult,
+};
+use ethereum_types::{H160, H256, U256};
+use evm::{
+	events::{Event, EvmEvent, Listener as ListenerT, StepEventFilter},
+	runtime::{Capture, ExitError, ExitReason, ExitSucceed, RuntimeEvent},
 };
 use evm_gasometer::events::GasometerEvent;
-use ethereum_types::{H160, H256, U256};
-use evm::runtime::{Capture, ExitError, ExitReason, ExitSucceed, RuntimeEvent};
-use std::{collections::btree_map::BTreeMap, vec, vec::Vec};
-
 
 /// Enum of the different "modes" of tracer for multiple runtime versions and
 /// the kind of EVM events that are emitted.
@@ -202,23 +204,28 @@ impl ListenerCl {
 		}
 	}
 
+	/// Updates internal state based on the type of Gasometer event received.
 	pub fn gasometer_event(&mut self, event: GasometerEvent) {
 		match event {
+			// Handle cost recording events
 			GasometerEvent::RecordCost { snapshot, .. }
 			| GasometerEvent::RecordDynamicCost { snapshot, .. }
 			| GasometerEvent::RecordStipend { snapshot, .. } => {
-				if let Some(context) = self.context_stack.last_mut() {
-					if context.start_gas.is_none() {
-						context.start_gas = Some(snapshot.gas());
+				if let Some(current_context) = self.context_stack.last_mut() {
+					// Update start_gas if it is not already set
+					if current_context.start_gas.is_none() {
+						current_context.start_gas = Some(snapshot.gas());
 					}
-					context.gas = snapshot.gas();
+					// Update current gas value
+					current_context.gas = snapshot.gas();
 				}
 			}
+			// Handle transaction recording events
 			GasometerEvent::RecordTransaction { cost, .. } => {
 				self.transaction_cost = cost;
 				self.record_transaction_event_only = true;
 			}
-			// We ignore other kinds of message if any (new ones may be added in the future).
+			// Ignore other types of events (new ones may be added in the future)
 			#[allow(unreachable_patterns)]
 			_ => (),
 		}
@@ -231,7 +238,8 @@ impl ListenerCl {
 				..
 			} => {
 				if let Some(ContextType::Call(call_type)) = ContextType::from(opcode) {
-					self.call_type = Some(call_type)
+					// Set the call type if the opcode corresponds to a call operation.
+					self.call_type = Some(call_type);
 				}
 			}
 			RuntimeEvent::StepResult {
@@ -241,26 +249,24 @@ impl ListenerCl {
 				if let Some((key, entry)) = self.pop_context_to_entry(reason, return_value) {
 					match self.version {
 						TracingVersion::Legacy => {
-							// In Legacy mode we directly insert the entry.
+							// Insert the entry directly in Legacy mode.
 							self.insert_entry(key, entry);
 						}
 						TracingVersion::EarlyTransact => {
-							// In EarlyTransact mode this context must be used if this event is
-							// emitted. However the context of `EvmEvent::Exit` must be used if
-							// `StepResult` is skipped. For that reason we store this generated
-							// entry in a temporary value, and deal with it in `EvmEvent::Exit` that
-							// will be called in all cases.
+							// Store the generated entry to be used in EvmEvent::Exit.
+							// This entry will be handled in EvmEvent::Exit for all cases.
 							self.step_result_entry = Some((key, entry));
 						}
 					}
 				}
 			}
-			// We ignore other kinds of message if any (new ones may be added in the future).
+			// Ignore other types of messages (new ones may be added in the future).
 			#[allow(unreachable_patterns)]
 			_ => (),
 		}
 	}
 
+	////////////////////////////////////////////////////////////
 	pub fn evm_event(&mut self, event: EvmEvent) {
 		match event {
 			EvmEvent::TransactCall {
@@ -274,17 +280,13 @@ impl ListenerCl {
 				self.version = TracingVersion::EarlyTransact;
 				self.context_stack.push(Context {
 					entries_index: self.entries_next_index,
-
 					context_type: ContextType::Call(CallType::Call),
-
 					from: caller,
 					trace_address: vec![],
 					subtraces: 0,
 					value,
-
 					gas: 0,
 					start_gas: None,
-
 					data,
 					to: address,
 				});
@@ -299,31 +301,8 @@ impl ListenerCl {
 				init_code,
 				address,
 				..
-			} => {
-				self.record_transaction_event_only = false;
-				self.version = TracingVersion::EarlyTransact;
-				self.context_stack.push(Context {
-					entries_index: self.entries_next_index,
-
-					context_type: ContextType::Create,
-
-					from: caller,
-					trace_address: vec![],
-					subtraces: 0,
-					value,
-
-					gas: 0,
-					start_gas: None,
-
-					data: init_code,
-					to: address,
-				});
-
-				self.entries_next_index += 1;
-				self.skip_next_context = true;
 			}
-
-			EvmEvent::TransactCreate2 {
+			| EvmEvent::TransactCreate2 {
 				caller,
 				value,
 				init_code,
@@ -334,17 +313,13 @@ impl ListenerCl {
 				self.version = TracingVersion::EarlyTransact;
 				self.context_stack.push(Context {
 					entries_index: self.entries_next_index,
-
 					context_type: ContextType::Create,
-
 					from: caller,
 					trace_address: vec![],
 					subtraces: 0,
 					value,
-
 					gas: 0,
 					start_gas: None,
-
 					data: init_code,
 					to: address,
 				});
@@ -378,9 +353,6 @@ impl ListenerCl {
 						vec![]
 					};
 
-					// For subcalls we want to have "from" always be the parent context address
-					// instead of `context.caller`, since the latter will not have the correct
-					// value inside a DelegateCall.
 					let from = if let Some(parent_context) = self.context_stack.last() {
 						parent_context.to.clone()
 					} else {
@@ -389,17 +361,13 @@ impl ListenerCl {
 
 					self.context_stack.push(Context {
 						entries_index: self.entries_next_index,
-
 						context_type: ContextType::Call(call_type),
-
 						from,
 						trace_address,
 						subtraces: 0,
 						value: context.apparent_value,
-
 						gas: 0,
 						start_gas: None,
-
 						data: input.to_vec(),
 						to: code_address,
 					});
@@ -413,7 +381,6 @@ impl ListenerCl {
 			EvmEvent::Create {
 				caller,
 				address,
-				// scheme,
 				value,
 				init_code,
 				..
@@ -432,17 +399,13 @@ impl ListenerCl {
 
 					self.context_stack.push(Context {
 						entries_index: self.entries_next_index,
-
 						context_type: ContextType::Create,
-
 						from: caller,
 						trace_address,
 						subtraces: 0,
 						value,
-
 						gas: 0,
 						start_gas: None,
-
 						data: init_code.to_vec(),
 						to: address,
 					});
@@ -452,6 +415,7 @@ impl ListenerCl {
 					self.skip_next_context = false;
 				}
 			}
+
 			EvmEvent::Suicide {
 				address,
 				target,
@@ -469,7 +433,7 @@ impl ListenerCl {
 				self.insert_entry(
 					self.entries_next_index,
 					Call {
-						from: address, // this contract is self destructing
+						from: address,
 						trace_address,
 						subtraces: 0,
 						value: 0.into(),
@@ -483,12 +447,11 @@ impl ListenerCl {
 				);
 				self.entries_next_index += 1;
 			}
+
 			EvmEvent::Exit {
 				reason,
 				return_value,
 			} => {
-				// We know we're in `TracingVersion::EarlyTransact` mode.
-
 				self.record_transaction_event_only = false;
 
 				let entry = self
@@ -500,18 +463,18 @@ impl ListenerCl {
 					self.insert_entry(key, entry);
 				}
 			}
+
 			EvmEvent::PrecompileSubcall { .. } => {
-				// In a precompile subcall there is no CALL opcode result to observe, thus
-				// we need this new event. Precompile subcall might use non-standard call
-				// behavior (like batch precompile does) thus we simply consider this a call.
 				self.call_type = Some(CallType::Call);
 			}
 
-			// We ignore other kinds of message if any (new ones may be added in the future).
+			// We ignore other kinds of events (new ones may be added in the future).
 			#[allow(unreachable_patterns)]
 			_ => (),
 		}
 	}
+
+	////////////////////////////////////////////////////////////
 
 	fn insert_entry(&mut self, key: u32, entry: Call) {
 		if let Some(ref mut last) = self.entries.last_mut() {
@@ -538,13 +501,12 @@ impl ListenerCl {
 				context.entries_index,
 				match context.context_type {
 					ContextType::Call(call_type) => {
-						let res = match &reason {
+						let call_result = match &reason {
 							ExitReason::Succeed(ExitSucceed::Returned) => {
 								CallResult::Output(return_value.to_vec())
 							}
 							ExitReason::Succeed(_) => CallResult::Output(vec![]),
 							ExitReason::Error(error) => CallResult::Error(error_message(error)),
-
 							ExitReason::Revert(_) => {
 								CallResult::Error(b"execution reverted".to_vec())
 							}
@@ -562,12 +524,12 @@ impl ListenerCl {
 								call_type,
 								to: context.to,
 								input: context.data,
-								res,
+								res: call_result,
 							},
 						}
 					}
 					ContextType::Create => {
-						let res = match &reason {
+						let create_result = match &reason {
 							ExitReason::Succeed(_) => CreateResult::Success {
 								created_contract_address_hash: context.to,
 								created_contract_code: return_value.to_vec(),
@@ -590,7 +552,7 @@ impl ListenerCl {
 							from: context.from,
 							inner: CallInner::Create {
 								init: context.data,
-								res,
+								res: create_result,
 							},
 						}
 					}
@@ -604,17 +566,17 @@ impl ListenerCl {
 
 fn error_message(error: &ExitError) -> Vec<u8> {
 	match error {
-		ExitError::StackUnderflow => "stack underflow",
 		ExitError::StackOverflow => "stack overflow",
+		ExitError::StackUnderflow => "stack underflow",
 		ExitError::InvalidJump => "invalid jump",
 		ExitError::InvalidRange => "invalid range",
+		ExitError::CreateContractLimit => "create contract limit",
+		ExitError::OutOfFund => "out of funds",
 		ExitError::DesignatedInvalid => "designated invalid",
 		ExitError::CallTooDeep => "call too deep",
-		ExitError::CreateCollision => "create collision",
-		ExitError::CreateContractLimit => "create contract limit",
 		ExitError::OutOfOffset => "out of offset",
 		ExitError::OutOfGas => "out of gas",
-		ExitError::OutOfFund => "out of funds",
+		ExitError::CreateCollision => "create collision",
 		ExitError::Other(err) => err,
 		_ => "unexpected error",
 	}
@@ -647,7 +609,6 @@ impl ListenerT for ListenerCl {
 		}
 	}
 }
-
 
 //RAW/////////////////////////
 #[derive(Debug)]
@@ -720,14 +681,14 @@ impl ListenerRaw {
 	pub fn gasometer_event(&mut self, event: GasometerEvent) {
 		match event {
 			GasometerEvent::RecordTransaction { cost, .. } => {
-				// First event of a transaction.
-				// Next step will be the first context.
+				// This is the first event of a transaction.
+				// The next step will be the first context.
 				self.new_context = true;
 				self.final_gas = cost;
 			}
 			GasometerEvent::RecordCost { cost, snapshot } => {
 				if let Some(context) = self.context_stack.last_mut() {
-					// Register opcode cost. (ignore costs not between Step and StepResult)
+					// Register opcode cost. (Ignore costs not between Step and StepResult)
 					if let Some(step) = &mut context.current_step {
 						step.gas = snapshot.gas();
 						step.gas_cost = cost;
@@ -740,7 +701,7 @@ impl ListenerRaw {
 				gas_cost, snapshot, ..
 			} => {
 				if let Some(context) = self.context_stack.last_mut() {
-					// Register opcode cost. (ignore costs not between Step and StepResult)
+					// Register opcode cost. (Ignore costs not between Step and StepResult)
 					if let Some(step) = &mut context.current_step {
 						step.gas = snapshot.gas();
 						step.gas_cost = gas_cost;
@@ -749,7 +710,7 @@ impl ListenerRaw {
 					self.final_gas = snapshot.used_gas;
 				}
 			}
-			// We ignore other kinds of message if any (new ones may be added in the future).
+			// Ignore other kinds of messages (new ones may be added in the future).
 			#[allow(unreachable_patterns)]
 			_ => (),
 		}
@@ -965,17 +926,16 @@ impl ListenerT for ListenerRaw {
 	}
 }
 
-
-
 #[cfg(test)]
 #[allow(unused)]
 mod tests {
 	use super::*;
 	use ethereum_types::H256;
-	use evm::events::CreateScheme;
+	use evm::{
+		events::CreateScheme,
+		runtime::{Context as EvmContext, Memory, Stack},
+	};
 	use evm_gasometer::events::Snapshot;
-	use evm::runtime::{Memory, Stack};
-	use evm::runtime::Context as EvmContext;
 
 	enum TestEvmEvent {
 		Call,

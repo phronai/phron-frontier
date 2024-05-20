@@ -39,7 +39,7 @@ pub struct ExplorerCall {
 	/// Indices of parent calls.
 	pub trace_address: Vec<u32>,
 	/// Number of children calls.
-	/// Not needed for Blockscout, but needed for `crate::block`
+	/// Not needed for Explorer, but needed for `crate::block`
 	/// types that are build from this type.
 	#[serde(skip)]
 	pub subtraces: u32,

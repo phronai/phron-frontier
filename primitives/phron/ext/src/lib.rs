@@ -7,62 +7,65 @@
 //! - Host functions will decode the input and emit an event `with` environmental.
 
 #![cfg_attr(not(feature = "std"), no_std)]
+
 use sp_runtime_interface::runtime_interface;
 
 use parity_scale_codec::Decode;
 use sp_std::vec::Vec;
 
-use evm::events::Event;
-use evm::events::StepEventFilter;
-pub use evm::events::EvmEvent;
-pub use evm_gasometer::events::GasometerEvent;
-pub use evm::runtime::RuntimeEvent;
+use evm::{
+	events::{Event, EvmEvent, StepEventFilter},
+	runtime::RuntimeEvent,
+};
+use evm_gasometer::events::GasometerEvent;
 
 #[runtime_interface]
+/// Extension trait for Phron functionality.
 pub trait PhronExt {
+	/// Perform a raw step operation with the given data.
 	fn raw_step(&mut self, _data: Vec<u8>) {}
 
+	/// Perform a raw gas operation with the given data.
 	fn raw_gas(&mut self, _data: Vec<u8>) {}
 
+	/// Handle the return value from a raw operation.
 	fn raw_return_value(&mut self, _data: Vec<u8>) {}
 
+	/// Update the entry in the call list at the specified index with the given value.
 	fn call_list_entry(&mut self, _index: u32, _value: Vec<u8>) {}
 
+	/// Create a new call list.
 	fn call_list_new(&mut self) {}
 
 	// New design, proxy events.
-	/// An `Evm` event proxied by the PHRON runtime to this host function.
-	/// evm -> phron_runtime -> host.
+
+	/// Process an Evm event proxied by the PHRON runtime to this host function.
 	fn evm_event(&mut self, event: Vec<u8>) {
 		if let Ok(event) = EvmEvent::decode(&mut &event[..]) {
 			Event::Evm(event).emit();
 		}
 	}
 
-	/// A `Gasometer` event proxied by the PHRON runtime to this host function.
-	/// evm_gasometer -> phron_runtime -> host.
+	/// Process a Gasometer event proxied by the PHRON runtime to this host function.
 	fn gasometer_event(&mut self, event: Vec<u8>) {
 		if let Ok(event) = GasometerEvent::decode(&mut &event[..]) {
 			Event::Gasometer(event).emit();
 		}
 	}
 
-	/// A `Runtime` event proxied by the PHRON runtime to this host function.
-	/// evm_runtime -> phron_runtime -> host.
+	/// Process a Runtime event proxied by the PHRON runtime to this host function.
 	fn runtime_event(&mut self, event: Vec<u8>) {
 		if let Ok(event) = RuntimeEvent::decode(&mut &event[..]) {
 			Event::Runtime(event).emit();
 		}
 	}
 
-	/// Allow the tracing module in the runtime to know how to filter Step event
-	/// content, as cloning the entire data is expensive and most of the time
-	/// not necessary.
+	/// Provide a filter for Step events to be used by the tracing module in the runtime.
 	fn step_event_filter(&self) -> StepEventFilter {
 		evm::events::step_event_filter().unwrap_or_default()
 	}
 
-	/// An event to create a new CallList (currently a new transaction when tracing a block).
+	/// Emit an event to create a new CallList (currently a new transaction when tracing a block).
 	#[version(2)]
 	fn call_list_new(&mut self) {
 		Event::CallListNew().emit();
