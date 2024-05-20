@@ -37,6 +37,7 @@ std = [
 	"evm-gasometer/std",
 	"evm-runtime/std",
 	"fp-rpc-phron/std",
+	"sp-std/std",
 	"evm/std",
 ]
 evm-tracing = ["evm-gasometer/tracing", "evm-runtime/tracing", "evm/tracing"]
