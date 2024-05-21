@@ -30,9 +30,10 @@ std = [
 	"ethereum-types/std",
 	"sp-externalities/std",
 	"sp-runtime-interface/std",
+	"fc-evm-tracing/std",
 	"sp-std/std",
 	"evm/std",
 	"evm-runtime/std",
 	"evm-gasometer/std",
 ]
-evm-tracing = ["evm-runtime/tracing"]
+evm-tracing = ["evm-runtime/tracing", "evm-gasometer/tracing"]
