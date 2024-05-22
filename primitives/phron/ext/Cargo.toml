@@ -11,11 +11,9 @@ version = "0.1.0"
 ethereum-types = { workspace = true }
 
 # Frontier
-
-evm = { workspace = true }
+evm = { workspace = true, features = ["tracing"] }
 evm-runtime = { workspace = true, features = ["tracing"] }
 evm-gasometer = { workspace = true, features = ["tracing"] }
-fc-evm-tracing = { workspace = true }
 
 # Substrate
 parity-scale-codec = { workspace = true }
@@ -30,7 +28,6 @@ std = [
 	"ethereum-types/std",
 	"sp-externalities/std",
 	"sp-runtime-interface/std",
-	"fc-evm-tracing/std",
 	"sp-std/std",
 	"evm/std",
 	"evm-runtime/std",

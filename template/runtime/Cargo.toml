@@ -57,6 +57,7 @@ pallet-evm-precompile-modexp = { workspace = true }
 pallet-evm-precompile-sha3fips = { workspace = true }
 pallet-evm-precompile-simple = { workspace = true }
 pallet-hotfix-sufficients = { workspace = true }
+evm-tracer = { workspace = true }
 
 [build-dependencies]
 substrate-wasm-builder = { workspace = true, optional = true }
@@ -68,6 +69,7 @@ with-paritydb-weights = []
 std = [
 	"parity-scale-codec/std",
 	"scale-info/std",
+	"evm-tracer/std",
 	# Substrate
 	"sp-api/std",
 	"sp-block-builder/std",

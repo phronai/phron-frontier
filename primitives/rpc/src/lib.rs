@@ -291,7 +291,7 @@ pub enum TracerInput {
 	CallTracer,
 }
 
-/// DebugRuntimeApi V2 result. Trace response is stored in client and runtime api call response is
+/// DebugRuntimeApi V2 result. Trace response is stored in a client and runtime api call response is
 /// empty.
 #[derive(Debug)]
 pub enum Response {

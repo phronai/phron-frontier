@@ -2734,7 +2734,6 @@ dependencies = [
  "evm",
  "evm-gasometer",
  "evm-runtime",
- "fc-evm-tracing",
  "parity-scale-codec",
  "sp-externalities",
  "sp-runtime-interface",
@@ -3091,6 +3090,7 @@ dependencies = [
 name = "frontier-template-runtime"
 version = "0.0.0"
 dependencies = [
+ "evm-tracer",
  "fp-account",
  "fp-evm",
  "fp-rpc-phron",
