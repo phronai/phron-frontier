@@ -36,6 +36,10 @@ use pallet_evm::GasWeightMapping;
 
 use crate::{evm::handle::using_precompile_handle, solidity::revert::revert};
 
+/// System account size in bytes = Pallet_Name_Hash (16) + Storage_name_hash (16) +
+/// Blake2_128Concat (16) + AccountId (20) + AccountInfo (4 + 12 + AccountData (4* 16)) = 148
+pub const SYSTEM_ACCOUNT_SIZE: u64 = 148;
+
 #[derive(Debug)]
 pub enum TryDispatchError {
 	Evm(ExitError),
